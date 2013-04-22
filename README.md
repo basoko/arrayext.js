@@ -21,7 +21,8 @@ Or you can use it in your node server installing the arrayext.js package (npm in
 * [deduct](#deduct)
 * [merge](#merge)
 * [isArray](#isArray)
-
+* [foldLeft] (#foldLeft)
+* [foldRight] (#foldRight)
 
 <a name="index" />
 ### index(value, comparisonFunction)
@@ -215,3 +216,53 @@ Usage:
     };
 
     foo3.merge(foo4, check);      /* Returns [{a: 1, b:2}, {a: 3, b:4}, {a: 5, b:6}] */
+
+<a name="foldLeft" />
+### foldLeft(accumulator, operationFunction)
+Returns the accumulator value after operate over all items and apply for each one from left to rigth the operationFuncion
+
+Usage:
+
+    var foo = [1,2,3,4,5];
+
+    var sum = function(a, b) {
+      return a + b;
+    };
+
+    var prod = function(a, b) {
+      return a * b;
+    };   
+
+    var count = function(a, b) {
+      return ++a;
+    }
+
+    var average = function(array) {
+       return array.foldLeft(0, sum) / array.foldLeft(0, count);
+    };
+   
+    var sumResult = foo.foldLeft(0, sum);
+    var prodResult = foo.foldLeft(1, prod);
+    var countResult = foo.foldLeft(0, count);
+    var averageResult = average(foo);
+
+<a name="foldRight" />
+### foldRight(accumulator, operationFunction)
+Returns the accumulator value after operate over all items and apply for each one from rigth to left the operationFuncion
+
+Usage:
+
+    var foo = [1,2,3,4,5];
+
+    var reverse = function(a, b) {
+      a.push(b);
+      return a;
+    };   
+
+    var reverseFilter = function(a, b) {
+      if(b % 2 === 0) a.push(b);
+      return a;
+    };   
+
+    var reverseResult = foo.foldRight([], reverse);
+    var filterResult = foo.foldRight([], reverseFilter);

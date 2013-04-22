@@ -5,6 +5,8 @@ Copyright (c) 2013 Iñigo Gonzalez Vazquez(haas85) - Under MIT License
 
 
 (function() {
+  var _fold;
+
   Array.prototype.shove = function(elem, check) {
     if (this.index(elem, check) === -1) {
       this.push(elem);
@@ -108,6 +110,24 @@ Copyright (c) 2013 Iñigo Gonzalez Vazquez(haas85) - Under MIT License
     } else {
       return this.indexOf(value);
     }
+  };
+
+  Array.prototype.foldLeft = function(accumulator, operation) {
+    return _fold(this, accumulator, operation);
+  };
+
+  Array.prototype.foldRight = function(accumulator, operation) {
+    return _fold(this.reverse(), accumulator, operation);
+  };
+
+  _fold = function(list, accumulator, operation) {
+    var elem, _i, _len;
+
+    for (_i = 0, _len = list.length; _i < _len; _i++) {
+      elem = list[_i];
+      accumulator = operation(accumulator, elem);
+    }
+    return accumulator;
   };
 
 }).call(this);

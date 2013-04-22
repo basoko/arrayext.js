@@ -151,3 +151,50 @@ describe "Array", ->
     expect(foo.index(3, check)).toBe 1
     expect(foo.index(8, check)).toBe -1
     expect([0..5].index 3).toBe 3
+
+  it "sum function using foldLeft", ->
+    foo = [1..5]
+    sum = (a, b) -> return a + b;
+    sumResult = foo.foldLeft 0, sum
+    
+    expect(sumResult).toEqual 15
+
+  it "prod function using foldLeft", ->
+    foo = [1..5]
+    prod = (a, b) -> return a * b;
+    prodResult = foo.foldLeft 1, prod
+    
+    expect(prodResult).toEqual 120
+
+  it "average funciton using foldLeft", ->
+    foo = [1..5]
+    avg = 3
+
+    average = (array) -> array.foldLeft(0, (a, b) -> a+b) / array.foldLeft(0, (a, b) -> ++a)
+  
+    expect(average foo).toEqual avg
+  
+  it "reverse function using foldRight", ->
+    foo = [1..5]
+    fooReverse = [5..1]
+    reverse = (a, b) ->
+      a.push b
+      return a
+      
+    reverseResult = foo.foldRight [], reverse
+    
+    expect(reverseResult).toEqual fooReverse
+
+  it "reverse filtered using foldRight", ->
+    foo = [1..5]
+    filtered = [4, 2]
+
+    reverseFilter = (a, b) ->
+      a.push b if a % 2 is 0
+      a
+
+    filteredResult = foo.foldRight [], reverseFilter
+
+    expect(filteredResult).toEqual filteredResult
+    
+    

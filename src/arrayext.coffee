@@ -2,7 +2,7 @@
 http://github.com/haas85/arrayExt.js
 Copyright (c) 2013 Iñigo Gonzalez Vazquez(haas85) - Under MIT License ###
 # Array::isArray = true
-
+  
 # Array.isArray = (elem)-> if elem.isArray? then true else false
 
 Array::shove = (elem, check) ->
@@ -56,3 +56,14 @@ Array::index = (value, check) ->
     position
   else
     @indexOf value
+
+Array::foldLeft = (accumulator, operation) ->
+  _fold @, accumulator, operation
+
+Array::foldRight = (accumulator, operation) ->
+  _fold @reverse(), accumulator, operation
+  
+_fold = (list, accumulator, operation) ->
+  for elem in list
+    accumulator = operation accumulator, elem
+  accumulator
